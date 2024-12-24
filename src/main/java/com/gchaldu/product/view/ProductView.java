@@ -34,6 +34,9 @@ public class ProductView {
                     add(controller, categoryController);
                     break;
                 case "2":
+
+                    break;
+                case "3":
                     exit = true;
                     break;
                 default:
@@ -71,7 +74,7 @@ public class ProductView {
     private void displayMenu() {
         System.out.println("\nMenú:");
         System.out.println("1. Agregar producto");
-        System.out.println("2. Salir");
+        System.out.println("3. Salir");
         System.out.print("Seleccione una opción: ");
     }
 
