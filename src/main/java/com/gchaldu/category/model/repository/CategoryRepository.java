@@ -18,15 +18,15 @@ public class CategoryRepository {
         publishSubject.onNext(categories);
     }
 
-    public boolean getCategoryByName(String name) throws ExistCategoryException {
+    public Category getCategoryByName(String name) throws ExistCategoryException {
         Optional<Category> cat =  categories.stream()
                 .filter(category -> category.getName().equalsIgnoreCase(name))
                 .findAny();
 
         if(cat.isPresent()){
-            throw new ExistCategoryException("Error, Categoria existente!!!");
+            return cat.get();
         }
-        return true;
+        return null;
     }
 
     public PublishSubject<List<Category>> getCategories() {

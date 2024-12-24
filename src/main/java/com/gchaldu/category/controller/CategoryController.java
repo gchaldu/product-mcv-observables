@@ -12,7 +12,7 @@ public class CategoryController {
         this.repository = repository;
     }
 
-    public void add(String name){
+    public Category add(String name){
         Category category = new Category(name);
         try {
             repository.getCategoryByName(name);
@@ -20,6 +20,7 @@ public class CategoryController {
         } catch (ExistCategoryException e) {
             System.out.println(e.getMessage());
         }
+        return category;
     }
 
     public CategoryRepository getRepository() {

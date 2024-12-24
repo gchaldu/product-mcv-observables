@@ -1,5 +1,8 @@
 package com.gchaldu.product.view;
 
+import com.gchaldu.category.controller.CategoryController;
+import com.gchaldu.category.excepciones.ExistCategoryException;
+import com.gchaldu.category.model.entity.Category;
 import com.gchaldu.product.controller.ProductController;
 import com.gchaldu.product.excepciones.InputNumberExcepcion;
 import com.gchaldu.product.model.entity.Product;
@@ -14,7 +17,7 @@ public class ProductView {
     private Disposable subscription;
     private final Scanner scanner = new Scanner(System.in);
 
-    public void start(ProductController controller) {
+    public void start(ProductController controller, CategoryController categoryController) {
         // La Vista se suscribe al observable del controlador
         subscription = controller.getProductObservable().subscribe(
                 products -> displayProducts(products),
@@ -28,7 +31,7 @@ public class ProductView {
             String choice = scanner.nextLine();
             switch (choice) {
                 case "1":
-                    add(controller);
+                    add(controller, categoryController);
                     break;
                 case "2":
                     exit = true;
@@ -41,7 +44,7 @@ public class ProductView {
         stop();
     }
 
-    public void add(ProductController controller){
+    public void add(ProductController controller, CategoryController categoryController){
         try{
             System.out.println("Ingrese el nombre del producto");
             String name = scanner.nextLine();
@@ -49,11 +52,17 @@ public class ProductView {
             System.out.println("Ingrese el precio del producto");
             String txtPrice = scanner.nextLine();
 
-            controller.addProduct(name,txtPrice);
+            System.out.println("Ingrese el NAME de la categoria");
+            String nameCategory = scanner.nextLine();
+            Category category = categoryController.getRepository().getCategoryByName(nameCategory);
+            if(category==null){
+                category = categoryController.add(nameCategory);
+            }
+            controller.addProduct(name,txtPrice, category);
 
         }catch (IllegalArgumentException e){
             displayError(e.getMessage());
-        } catch (InputNumberExcepcion e) {
+        } catch (InputNumberExcepcion | ExistCategoryException e) {
             System.out.println(e.getMessage());
         }
 

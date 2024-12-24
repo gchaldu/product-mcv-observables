@@ -21,12 +21,9 @@ public class Main {
 
         // Iniciar la vista
         try {
-            //productView.start(productController);
-            categoryView.start(categoryController);
+            productView.start(productController, categoryController);
         } finally {
-            // Asegurarse de liberar recursos
-            //productView.stop();
-            categoryView.stop();
+            productView.stop();
         }
     }
 }

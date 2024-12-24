@@ -10,20 +10,8 @@ public class Category {
         this.name = name;
     }
 
-    public static Long getCounter() {
-        return counter;
-    }
-
-    public static void setCounter(Long counter) {
-        Category.counter = counter;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
